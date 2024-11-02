@@ -272,3 +272,15 @@ To ensure the tool runs smoothly, the following dependencies are required:
 ---
 
 By following these user stories and acceptance criteria, the `tldir` command-line tool will effectively scan directories, summarize content, and provide a powerful querying interface, all while utilizing efficient Rust-based libraries and adhering to the specified requirements.
+
+--- 
+
+devise a set of user stories / acceptance criteria for a command line tool that scans directories for utf-8 encoded files ; then chunks and summarizes recursively to folder .tldir eg if a directory contains a python file and md file it will map chunking then reduce by summarizing subchunks into folder for toplevel chunks. 
+* the cli bin is invoked by tldir <dirname> 
+* one of the parameters is SUMMARY_LENGTH which is set to 8192 tokens ala tiktoken 
+please: 
+* [ ] define the cli args and the output of tldr --help
+* [ ] define the contents of the .tldir file ; it should contain locally stored embeddings via sqlite / chroma but also a top-level summary capped by summary length defined above 
+* [ ] use fastembed-rs for embeddings, chroma / sqlite for retrieval questions tldir ask <dirname> 
+* [ ] use mistral-rs and phi3.5-moe for inference / summarization 
+* [ ] use llm-chain-rs for chunking etc  
