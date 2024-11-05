@@ -4,18 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-# CLI argument parsing
-clap = { version = "4.0", features = ["derive"] }
-
-# Core dependencies from vendor
-candle-core = { path = "./vendor/candle/candle-core" }
-mistral-rs = { path = "./vendor/mistral.rs" }
-text-splitter = { path = "./vendor/text-splitter" }
-
-# Database and embeddings
-chroma-db = { path = "./vendor/chroma" }
-fastembed-rs = "0.1"  # You'll need to add this from crates.io
-sqlx = { version = "0.7", features = ["sqlite", "runtime-tokio-native-tls"] }
-
-# Async runtime
-tokio = { version = "1.0", features = ["full"] }
+anyhow = "1.0"
+clap = { version = "4.4", features = ["derive"] }
+candle = { package = "candle-core", version = "0.3" }
+candle-nn = "0.3"
+candle-transformers = "0.3"
+tokenizers = "0.15"
+hf-hub = "0.3"
+fastembed-rs = "0.1"
+rusqlite = { version = "0.30", features = ["bundled"] }

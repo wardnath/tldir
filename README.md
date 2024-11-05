@@ -183,7 +183,7 @@ The tool uses:
 To ensure the tool runs smoothly, the following dependencies are required:
 
 - Rust environment for running the tool and associated libraries.
-- **llm-chain-rs**, **fastembed-rs**, **mistral-rs**, and **phi-3.5-moe** installed and properly configured.
+- **chroma**, **text-splitter**, **clap**, **text-embedding-inference**, and **candle** installed and properly configured.
 - SQLite installed for database operations.
 
 ---
@@ -278,7 +278,7 @@ devise a set of user stories / acceptance criteria for a command line tool that 
 please: 
 * [ ] define the cli args and the output of tldr --help
 * [ ] define the contents of the .tldir file ; it should contain locally stored embeddings via sqlite / chroma but also a top-level summary capped by summary length defined above 
-* [ ] use fastembed-rs for embeddings, chroma / sqlite for retrieval questions tldir ask <dirname> 
-* [ ] use mistral-rs and phi3.5-moe for inference / summarization 
-* [ ] use llm-chain-rs for chunking etc  
-
+* [ ] use text-embeddings-inference for embeddings, chroma / sqlite for retrieval questions tldir ask <dirname> 
+* [ ] use text-splitter for chunking 
+* [ ] use candle for quantized phi model for summarization 
+* [ ] use clap for cli parsing 
