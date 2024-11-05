@@ -23,17 +23,17 @@ TLDIR is a tool that generates summaries and embeddings for directories (and fil
   - It ignores non-UTF-8 files and hidden directories/files unless explicitly specified.
 
 - **Chunking**:
-  - Files are chunked using **llm-chain-rs** to handle large files efficiently.
-  - Chunk sizes are optimized for the summarization model's input requirements.
+  - Files are chunked into manageable sizes for processing
+  - Chunk sizes are optimized for the model's input requirements
 
 - **Summarization**:
-  - Each chunk is summarized individually using **mistral-rs** and **phi-3.5-moe** models.
-  - Summaries are aggregated to create a top-level summary of the directory.
-  - The final summary does not exceed **8192 tokens** as specified by `SUMMARY_LENGTH`.
+  - Each chunk is summarized using Candle's quantized Phi model
+  - Summaries are aggregated to create a top-level summary
+  - The final summary does not exceed 8192 tokens as specified by SUMMARY_LENGTH
 
 - **Embedding Generation**:
-  - Embeddings for each chunk are generated using **fastembed-rs**.
-  - Embeddings are stored locally for efficient retrieval.
+  - Embeddings for each chunk are generated using fastembed-rs
+  - Embeddings are stored locally for efficient retrieval
 
 - **Data Storage**:
   - All summaries and embeddings are stored in a `.tldir` folder within `<dirname>`.
@@ -167,29 +167,14 @@ The `.tldir` folder within the specified directory contains the following:
 
 ---
 
-**Implementation Details**
+**Technical Implementation**
 
 ---
 
-- **Chunking**:
-  - Implemented using **llm-chain-rs**, which efficiently handles large text data by chaining language model operations.
-  - Optimizes processing by breaking down files into manageable chunks.
-
-- **Summarization**:
-  - Uses **mistral-rs** and **phi-3.5-moe** models for generating high-quality summaries.
-  - Models are integrated to balance performance and accuracy.
-
-- **Embeddings**:
-  - **fastembed-rs** generates embeddings quickly, suitable for large datasets.
-  - Embeddings are essential for semantic search and retrieval during the `ask` command.
-
-- **Retrieval**:
-  - **Chroma** is used with SQLite to enable efficient vector searches within embeddings.
-  - Ensures quick retrieval of relevant chunks in response to user queries.
-
-- **Inference and Summarization Models**:
-  - **mistral-rs**: A Rust implementation for inference tasks, suitable for summarization.
-  - **phi-3.5-moe**: Mixture-of-experts model enhancing the summarization quality.
+The tool uses:
+- Candle for ML model operations with quantized Phi model for efficient CPU inference
+- fastembed-rs for generating embeddings
+- SQLite/Chroma for embedding storage and retrieval
 
 ---
 
@@ -247,6 +232,18 @@ To ensure the tool runs smoothly, the following dependencies are required:
 
    - Provides an immediate answer without entering interactive mode.
 
+6. **Top Level Summary**:
+
+   The top level summary is stored in `.tldir/summary.txt`.
+   ```bash
+   cat .tldir/summary.txt
+   ```
+   Convenience method to view the summary without entering interactive mode.
+   ```bash
+   tldir summarize /path/to/directory
+   ```
+
+
 ---
 
 **Testing and Validation**
@@ -284,3 +281,4 @@ please:
 * [ ] use fastembed-rs for embeddings, chroma / sqlite for retrieval questions tldir ask <dirname> 
 * [ ] use mistral-rs and phi3.5-moe for inference / summarization 
 * [ ] use llm-chain-rs for chunking etc  
+
